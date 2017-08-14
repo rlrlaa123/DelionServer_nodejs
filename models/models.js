@@ -57,16 +57,41 @@ exports.postMenu = function(_shopid, _name, _extender, _price){
 
 exports.deleteMenu = function(_name){
     return new Promise(function(resolve,reject){
-        db.select().where('name',_name).from('Menu')
+        db.where('name',_name).del().from('Menu')
             .then(function(result){
-                resolve(result);
-                db.where('name',_name).del().from('Menu')
-                    .then(function(result){
-                        resolve(_name+"삭제 완료")
+                db.select().where('name',_name).from('Menu')
+                    .then(function (result){
+                        resolve(result)
                     })
                     .catch(function(error){
                         reject(error)
                     })
+            })
+            .catch(function(reject){
+                reject(error)
+            })
+    })
+};
+
+exports.updateMenu = function(_shopid,_name,_extender,_price) {
+    return new Promise(function (resolve, reject) {
+        db.where('name','=',_name).update({
+            'shopid':parseInt(_shopid),
+            'name':_name,
+            'extender':parseInt(_extender),
+            'price':parseInt(_price)
+        }).from('Menu')
+            .then(function (result) {
+                db.select().where('name',_name).from('Menu')
+                    .then(function(result){
+                        resolve(result);
+                    })
+                    .catch(function(error){
+                        reject(error)
+                    })
+            })
+            .catch(function (error) {
+                reject(error)
             })
     })
 };

@@ -24,7 +24,7 @@ router.post('/insert', function(req, res, next){
         req.body['name'],
         req.body['extender'],
         req.body['price']
-        )
+    )
         .then(function(result){
             res.json(result)
         })
@@ -40,6 +40,22 @@ router.delete('/delete', function(req, res, next){
         })
         .catch(function(error){
             res.json(error)
+        })
+});
+
+router.put('/update', function(req, res, next){
+    console.log(req.body);
+    index_model.updateMenu(
+        req.body['shopid'],
+        req.body['name'],
+        req.body['extender'],
+        req.body['price']
+    )
+        .then(function(result){
+            res.json(result);
+        })
+        .catch(function(error){
+            res.json(error);
         })
 });
 module.exports = router;
