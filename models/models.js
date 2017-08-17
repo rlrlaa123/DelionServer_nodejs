@@ -5,19 +5,27 @@
 var db = require('../modules/db').get_instance();
 
 exports.getCategory = function(){
-    db.
-    select().from('Category')
-        .then(function(result){
-            console.log(result)
-        })
+    return new Promise(function(resolve,reject){
+        db.select().from('Category')
+            .then(function(result){
+                resolve(result)
+            })
+            .catch(function (error){
+                reject(error);
+            })
+    })
 };
 
 exports.getShop = function(){
-    db.
-        select().from('Shop').
-        then(function(result){
-            console.log(result)
-        })
+    return new Promise(function(resolve,reject){
+        db.select().from('Shop')
+            .then(function(result){
+                resolve(result)
+            })
+            .catch(function (error){
+                reject(error);
+            })
+    })
 };
 
 exports.getMenu = function(){

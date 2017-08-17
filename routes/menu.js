@@ -17,6 +17,35 @@ router.get('/list', function(req, res, next){
         })
 });
 
+router.get('/all_list', function(req, res, next){
+    var json_result = {};
+    get_menu_promise = index_model.getMenu()
+        .then(function(result){
+            json_result.menu_list = result
+        })
+        .catch(function(error){
+            res.json(error)
+        });
+
+    get_shop_promise = index_model.getShop()
+        .then(function(result){
+            console.log(result);
+            json_result.shop_list = result
+        })
+        .catch(function(error){
+            res.json(error)
+        });
+
+    Promise.all([get_menu_promise, get_shop_promise])
+        .then(function(){
+            console.log(json_result);
+            res.json(json_result)
+        })
+        .catch(function(error){
+            res.json(error)
+        })
+});
+
 router.post('/insert', function(req, res, next){
     console.log(req.body);
     index_model.postMenu(

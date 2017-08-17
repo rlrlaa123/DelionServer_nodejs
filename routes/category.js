@@ -9,6 +9,12 @@ var index_model = require('../models/models');
 /* GET home page. */
 router.get('/list', function(req, res, next) {
     res.json(index_model.getCategory())
+        .then(function(result){
+            resolve(result)
+        })
+        .catch(function(error){
+            reject(error)
+        })
 });
 
 module.exports = router;
